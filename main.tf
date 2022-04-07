@@ -1,24 +1,18 @@
-terraform {
-  required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 2.13.0"
-    }
+data "azurerm_resource_group" "jesusgroup" {
+  name = "myResourceGroup"
+}
+
+resource "azurerm_virtual_network" "jesusvnet" {
+  name = "jesus-vnet"
+  address_space = [ "10.0.0.0/10" ]
+  location = "australiaeast"
+  resource_group_name = data.azurerm_resource_group.jesusgroup.name
+
+  tags = {
+    environment = "Terraform test"
   }
+
 }
 
-provider "docker" {}
 
-resource "docker_image" "nginx" {
-  name         = "nginx:latest"
-  keep_locally = false
-}
 
-resource "docker_container" "nginx" {
-  image = docker_image.nginx.latest
-  name  = "tutorial"
-  ports {
-    internal = 80
-    external = 8000
-  }
-}
