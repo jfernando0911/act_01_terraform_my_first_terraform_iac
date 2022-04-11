@@ -1,0 +1,12 @@
+name: 'Learning github actions'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    name: 'Hello world'
+    runs-on: ubuntu-latest
+    steps:
+      - name: my-step1
+        run: echo "Hello World"
